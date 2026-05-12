@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Explorer 3D Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- 3D Scene Container -->
+    <div class="scene-container">
+        <canvas id="weatherCanvas"></canvas>
+    </div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Animated Header -->
+        <header class="app-header">
+            <div class="logo-animation">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-cloud"></i>
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h1 class="glitch" data-text="WEATHER EXPLORER PRO">WEATHER EXPLORER PRO</h1>
+            <p class="subtitle">Real-time  Weather Visualization</p>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-container glass">
+            <div class="search-input">
+                <i class="fas fa-search"></i>
+                <input type="text" id="city" placeholder="Enter city name..." autocomplete="off">
+                <div class="suggestions"></div>
+            </div>
+            <button class="search-btn" onclick="getWeather()">
+                <i class="fas fa-location-arrow"></i> Scan Weather
+            </button>
+            <button class="location-btn" onclick="getCurrentLocation()">
+                <i class="fas fa-location-crosshairs"></i>
+            </button>
+        </div>
+
+        <!-- Current Weather Display -->
+        <div class="weather-display glass">
+            <div class="current-weather">
+                <div class="main-info">
+                    <div class="city-time">
+                        <h2 id="cityName"><i class="fas fa-map-marker-alt"></i> <span>Select City</span></h2>
+                        <p id="currentTime">--:-- --</p>
+                    </div>
+                    <div class="temp-display">
+                        <div class="temp-main">
+                            <span id="temperature">--</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <p id="feelsLike">Feels like --°C</p>
+                    </div>
+                </div>
+                
+                <div class="weather-details">
+                    <div class="detail-card">
+                        <i class="fas fa-temperature-high"></i>
+                        <div>
+                            <p>High/Low</p>
+                            <p id="tempRange">--° / --°</p>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <p>Wind</p>
+                            <p id="windSpeed">-- km/h</p>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-tint"></i>
+                        <div>
+                            <p>Humidity</p>
+                            <p id="humidity">--%</p>
+                        </div>
+                    </div>
+                    <div class="detail-card">
+                        <i class="fas fa-eye"></i>
+                        <div>
+                            <p>Visibility</p>
+                            <p id="visibility">-- km</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animated Weather Icon -->
+            <div class="weather-icon-container">
+                <div class="icon-3d" id="weatherIcon3D">
+                    <div class="icon-particle"></div>
+                    <div class="icon-particle"></div>
+                    <div class="icon-particle"></div>
+                </div>
+                <p id="description" class="weather-desc">Weather description will appear here</p>
+                <div class="aqi-indicator">
+                    <div class="aqi-bar">
+                        <div class="aqi-fill" id="aqiFill"></div>
+                    </div>
+                    <span id="aqiText">AQI: --</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5-Day Forecast -->
+        <div class="forecast-container glass">
+            <h3><i class="fas fa-calendar-alt"></i> 5-DAY FORECAST</h3>
+            <div class="forecast-slider">
+                <button class="slider-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="forecast-cards">
+                    <!-- Cards will be generated by JavaScript -->
+                </div>
+                <button class="slider-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- Additional Features -->
+        <div class="extra-features">
+            <button class="feature-btn active" onclick="changeView('3d')">
+                <i class="fas fa-cube"></i> 3D View
+            </button>
+            <button class="feature-btn" onclick="changeView('radar')">
+                <i class="fas fa-satellite"></i> Radar
+            </button>
+            <button class="feature-btn" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> Theme
+            </button>
+            <button class="feature-btn" onclick="shareWeather()">
+                <i class="fas fa-share-alt"></i> Share
+            </button>
+        </div>
+
+        <!-- API Status -->
+        <div class="api-status">
+            <div class="status-indicator" id="apiStatus"></div>
+            <span>API: <span id="apiProvider">OpenWeatherMap</span></span>
+            <button class="switch-api-btn" onclick="switchAPI()">Switch API</button>
+        </div>
+    </div>
+    <footer style="text-align: center;">
+    <h2>Weather App Developed by Raj Golu shukla 2026</h2>
+</footer>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
