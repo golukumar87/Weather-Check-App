@@ -7,11 +7,19 @@ class WeatherApp {
                 name: 'OpenWeatherMap',
                 current: 'https://api.openweathermap.org/data/2.5/weather',
                 forecast: 'https://api.openweathermap.org/data/2.5/forecast',
-                key: 'e2356146428ff37f65f4abcade97206f' // You can replace this
+                // NOTE: Do NOT hardcode API keys for Vercel.
+                // Put your key in Vercel Environment Variables as OPENWEATHER_API_KEY.
+                // If not set, fallback to empty string to avoid leaking keys.
+                key: (typeof process !== 'undefined' && process?.env?.OPENWEATHER_API_KEY) ? process.env.OPENWEATHER_API_KEY : ''
+
             }
         };
-        
+
         this.currentAPI = 'openweathermap';
+
+        // If running on Vercel (frontend-only), process.env may not exist.
+        // Keep key empty so it won't leak. User must configure key in the right place.
+
         this.weatherData = null;
         this.isLoading = false;
         
@@ -239,8 +247,15 @@ class WeatherApp {
                     // Use mock forecast if API fails
                 }
                 
+                // Build-time fallback (optional). If OPENWEATHER_API_KEY is embedded into the bundle, it will work locally too.
+                // If key is missing, UI will fallback to mock data.
+                if (!api.key) {
+                    throw new Error('Missing OPENWEATHER_API_KEY');
+                }
+
                 return {
                     city: current.name,
+
                     country: current.sys?.country || 'Unknown',
                     temp: Math.round(current.main.temp),
                     feels_like: Math.round(current.main.feels_like),
